@@ -11,6 +11,7 @@
 #define N 30
 int vvod(char fn[]); //Функция для внесения данных в файл
 int vivod(char fn[]);//Функция для вывода данных из файла на экран
+int poisk(char fn[]);//Функция для поиска самого длинного слова среди слов, вторая буква которых есть 'а'
 
 int main()
 {
@@ -90,6 +91,46 @@ int vivod(char fn[])
 		printf(" ");
 		puts(word);
 	} while ((strcmp(word, "\n")) != 0); //Завершить цикл, когда он дойдёт до последнего ENTER
+	fclose(file);
+	return 0;
+}
+
+//Поиск самого длинного слова среди слов, вторая буква которых есть 'а'
+int poisk(char fn[])
+{
+	FILE* file;
+	char word[50]{}; //Массив для слова
+	int n, max = 0, f = 0; //n - длина слова f - флажок для случая "слов не найдено" 
+	file = fopen(fn, "r");
+	if (file == NULL)
+	{
+		printf("\n Ошибка! Невозможно окрыть файл для чтения\n");
+		return 1;
+	}
+	do
+	{
+		fgets(word, 49, file);
+		if (word[1] == 'a') //Условие: вторая буква - а
+		{
+			f = 1; //Найдено хотя бы одно слово
+			n = strlen(word);
+			if (n > max) max = n; //Наибольшая длина
+			n = 0;
+		}
+	} while ((strcmp(word, "\n")) != 0);
+	if (!f) { printf(" Слов не найдено\n"); return 2; }
+
+	rewind(file);
+	do
+	{
+		fgets(word, 49, file);
+		if (word[1] == 'a')
+		{
+			n = strlen(word);
+			if (n == max) { printf(" "); puts(word); } //Печать всех слов, соответствующих условиям
+			n = 0;
+		}
+	} while ((strcmp(word, "\n")) != 0);
 	fclose(file);
 	return 0;
 }
