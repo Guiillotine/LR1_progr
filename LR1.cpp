@@ -114,7 +114,7 @@ int poisk(char fn[])
 		{
 			f = 1; //Найдено хотя бы одно слово
 			n = strlen(word);
-			if (n < min) min = n; //Наибольшая длина
+			if (n < min) min = n; //Наименьшая длина
 			n = 0;
 		}
 	} while ((strcmp(word, "\n")) != 0);
